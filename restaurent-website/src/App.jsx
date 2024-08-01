@@ -4,6 +4,7 @@ import Home from './components/Home';
 import About from "./components/About";
 import Dishes from './components/Dishes';
 
+
 const App = () => {
   return (
     <div>
@@ -21,6 +22,8 @@ const App = () => {
         <div id="dishes">
           <Dishes />
         </div>
+
+        
 
       </main>
     </div>
