@@ -117,7 +117,7 @@ const Navbar = () => {
               duration={500}
               className="hover:text-brightColor transition-all cursor-pointer"
             >
-              Reviews
+              Services
             </Link>
 
             <Button title="Login" />
