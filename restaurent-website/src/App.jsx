@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
+import About from "./components/About";
 import Dishes from './components/Dishes';
 
 const App = () => {
@@ -13,10 +14,14 @@ const App = () => {
           <Home />
         </div>
 
+        <div id="about">
+          <About />
+        </div>
+
         <div id="dishes">
           <Dishes />
         </div>
-        
+
       </main>
     </div>
   );
