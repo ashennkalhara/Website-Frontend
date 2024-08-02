@@ -111,7 +111,7 @@ const Navbar = () => {
             </Link>
 
             <Link
-              to="review"
+              to="services"
               spy={true}
               smooth={true}
               duration={500}
@@ -178,14 +178,14 @@ const Navbar = () => {
             Menu
           </Link>
           <Link
-            to="review"
+            to="services"
             spy={true}
             smooth={true}
             duration={500}
             className="hover:text-brightColor transition-all cursor-pointer"
             onClick={closeMenu}
           >
-            Reviews
+            Services
           </Link>
 
           <Button title="Login" />
