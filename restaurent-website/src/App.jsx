@@ -5,6 +5,7 @@ import About from "./components/About";
 import Dishes from './components/Dishes';
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
+import Services from './components/Services';
 
 
 const App = () => {
@@ -27,6 +28,10 @@ const App = () => {
 
         <div id="menu">
           <Menu />
+        </div>
+
+        <div id="services">
+          <Services />
         </div>
         
         <Footer />
