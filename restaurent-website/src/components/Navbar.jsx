@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-scroll';
 import { BiRestaurant } from 'react-icons/bi';
 import { FaShoppingCart } from 'react-icons/fa'; // Import cart icon
@@ -7,13 +7,23 @@ import Button from '../layouts/Button';
 import { AiOutlineMenuUnfold, AiOutlineClose } from 'react-icons/ai';
 import { BiChevronDown } from 'react-icons/bi';
 import { CartContext } from '../contexts/CartContext';
+import AuthPopup from './AuthPopup'; // Import the AuthPopup component
 
 const Navbar = () => {
   const { toggleCartVisibility } = useContext(CartContext);
-  const [menu, setMenu] = React.useState(false);
+  const [menu, setMenu] = useState(false);
+  const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(false);
 
   const handleChange = () => {
     setMenu(!menu);
+  };
+
+  const handleOpenAuthPopup = () => {
+    setIsAuthPopupOpen(true);
+  };
+
+  const handleCloseAuthPopup = () => {
+    setIsAuthPopupOpen(false);
   };
 
   return (
@@ -78,7 +88,7 @@ const Navbar = () => {
             <FaShoppingCart size={24} /> {/* Cart icon */}
           </button>
 
-          <Button title="Login" />
+          <Button title="Login" onClick={handleOpenAuthPopup} />
         </nav>
 
         <div className="md:hidden flex items-center">
@@ -112,8 +122,10 @@ const Navbar = () => {
         <button onClick={toggleCartVisibility} className="text-lg font-medium hover:text-brightColor transition-all cursor-pointer">
           <FaShoppingCart size={24} /> {/* Cart icon */}
         </button>
-        <Button title="Login" />
+        <Button title="Login" onClick={handleOpenAuthPopup} />
       </div>
+
+      <AuthPopup isOpen={isAuthPopupOpen} onClose={handleCloseAuthPopup} />
     </div>
   );
 };
