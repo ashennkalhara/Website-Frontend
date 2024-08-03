@@ -1,8 +1,11 @@
-import React from "react";
-import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
-import Button from "../layouts/Button";
+import React, { useContext } from 'react';
+import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs';
+import Button from '../layouts/Button';
+import { CartContext } from '../contexts/CartContext';
 
 const DishesCard = ({ img, title, price, rating }) => {
+  const { addToCart } = useContext(CartContext);
+
   const renderStars = () => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -17,6 +20,11 @@ const DishesCard = ({ img, title, price, rating }) => {
     return stars;
   };
 
+  const handleAddToCart = () => {
+    const item = { id: Date.now(), title, price }; // Ensure a unique ID
+    addToCart(item);
+  };
+
   return (
     <div className="w-full lg:w-1/4 p-5 shadow-[rgba(0,0,0,0.24)_0px_3px_8px] rounded-lg">
       <img className="rounded-xl" src={img} alt="img" />
@@ -27,7 +35,7 @@ const DishesCard = ({ img, title, price, rating }) => {
         </div>
         <div className="flex flex-row items-center justify-center gap-4">
           <h3 className="font-semibold text-lg">{price}</h3>
-          <Button title="Buy Now" />
+          <Button title="Add to Cart" onClick={handleAddToCart} />
         </div>
       </div>
     </div>

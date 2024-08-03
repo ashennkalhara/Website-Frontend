@@ -6,11 +6,12 @@ import Dishes from './components/Dishes';
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 import Services from './components/Services';
-
+import Cart from "./components/Cart";
+import { CartProvider } from "./contexts/CartContext";
 
 const App = () => {
   return (
-    <div>
+    <CartProvider>
       <Navbar />
 
       <main>
@@ -33,11 +34,12 @@ const App = () => {
         <div id="services">
           <Services />
         </div>
-        
-        <Footer />
 
+        <Footer />
       </main>
-    </div>
+
+      <Cart /> {/* Ensure Cart is included here */}
+    </CartProvider>
   );
 }
 
