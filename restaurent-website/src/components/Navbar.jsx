@@ -70,6 +70,10 @@ const Navbar = () => {
             Services
           </Link>
 
+          <Link to="gallery" spy={true} smooth={true} duration={500} className="hover:text-brightColor transition-all cursor-pointer">
+            Gallery
+          </Link>
+
           <button onClick={toggleCartVisibility} className="flex items-center gap-2 text-lg font-medium hover:text-brightColor transition-all cursor-pointer">
             <FaShoppingCart size={24} /> {/* Cart icon */}
           </button>
@@ -101,6 +105,9 @@ const Navbar = () => {
         </Link>
         <Link to="services" spy={true} smooth={true} duration={500} className="hover:text-brightColor transition-all cursor-pointer" onClick={handleChange}>
           Services
+        </Link>
+        <Link to="gallery" spy={true} smooth={true} duration={500} className="hover:text-brightColor transition-all cursor-pointer" onClick={handleChange}>
+          Gallery
         </Link>
         <button onClick={toggleCartVisibility} className="text-lg font-medium hover:text-brightColor transition-all cursor-pointer">
           <FaShoppingCart size={24} /> {/* Cart icon */}
