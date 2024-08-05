@@ -17,6 +17,10 @@ const About = () => {
         <p>
           Whether you're joining us for breakfast, lunch, or dinner, you'll find an array of gourmet options that celebrate the rich flavors and traditions of our cuisine. From our signature dishes to seasonal specials, we offer something to satisfy every palate.
         </p>
+        <p>
+          Our menu is designed to showcase a wide variety of flavors, with each dish prepared to perfection. Our signature dishes highlight the best of our culinary expertise, while our seasonal specials bring new and exciting tastes based on the freshest ingredients available. We strive to provide a dining experience that caters to all tastes, ensuring every meal is a celebration of food and flavor.
+        </p>
+
         <div className="flex justify-center lg:justify-start">
           <Button title="Learn More" />
         </div>
