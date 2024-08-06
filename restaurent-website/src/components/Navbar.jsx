@@ -1,18 +1,18 @@
-// src/components/Navbar.jsx
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-scroll';
 import { BiRestaurant } from 'react-icons/bi';
-import { FaShoppingCart } from 'react-icons/fa'; // Import cart icon
+import { FaShoppingCart } from 'react-icons/fa';
 import Button from '../layouts/Button';
 import { AiOutlineMenuUnfold, AiOutlineClose } from 'react-icons/ai';
 import { BiChevronDown } from 'react-icons/bi';
 import { CartContext } from '../contexts/CartContext';
-import AuthPopup from './AuthPopup'; // Import the AuthPopup component
+import AuthPopup from './AuthPopup';
 
 const Navbar = () => {
   const { toggleCartVisibility } = useContext(CartContext);
   const [menu, setMenu] = useState(false);
   const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
   const handleChange = () => {
     setMenu(!menu);
@@ -24,6 +24,10 @@ const Navbar = () => {
 
   const handleCloseAuthPopup = () => {
     setIsAuthPopupOpen(false);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
   };
 
   return (
@@ -85,10 +89,17 @@ const Navbar = () => {
           </Link>
 
           <button onClick={toggleCartVisibility} className="flex items-center gap-2 text-lg font-medium hover:text-brightColor transition-all cursor-pointer">
-            <FaShoppingCart size={24} /> {/* Cart icon */}
+            <FaShoppingCart size={24} />
           </button>
 
-          <Button title="Login" onClick={handleOpenAuthPopup} />
+          {user ? (
+            <>
+              <span className="text-lg font-medium">{user.name}</span>
+              <Button title="Logout" onClick={handleLogout} />
+            </>
+          ) : (
+            <Button title="Login" onClick={handleOpenAuthPopup} />
+          )}
         </nav>
 
         <div className="md:hidden flex items-center">
@@ -120,12 +131,19 @@ const Navbar = () => {
           Gallery
         </Link>
         <button onClick={toggleCartVisibility} className="text-lg font-medium hover:text-brightColor transition-all cursor-pointer">
-          <FaShoppingCart size={24} /> {/* Cart icon */}
+          <FaShoppingCart size={24} />
         </button>
-        <Button title="Login" onClick={handleOpenAuthPopup} />
+        {user ? (
+          <>
+            <span className="text-lg font-medium">{user.name}</span>
+            <Button title="Logout" onClick={handleLogout} />
+          </>
+        ) : (
+          <Button title="Login" onClick={handleOpenAuthPopup} />
+        )}
       </div>
 
-      <AuthPopup isOpen={isAuthPopupOpen} onClose={handleCloseAuthPopup} />
+      <AuthPopup isOpen={isAuthPopupOpen} onClose={handleCloseAuthPopup} setUser={setUser} />
     </div>
   );
 };
