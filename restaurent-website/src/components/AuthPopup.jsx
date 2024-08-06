@@ -14,9 +14,9 @@ const AuthPopup = ({ isOpen, onClose, setUser }) => {
           &times;
         </button>
         {currentForm === 'signin' ? (
-          <SignIn onClose={onClose} setUser={(user) => { setUser(user); onClose(); }} />
+          <SignIn onClose={onClose} setUser={setUser} />
         ) : (
-          <SignUp onClose={onClose} setUser={(user) => { setUser(user); onClose(); }} />
+          <SignUp onClose={onClose} setUser={setUser} />
         )}
         <div className="text-center mt-4">
           {currentForm === 'signin' ? (
@@ -30,4 +30,4 @@ const AuthPopup = ({ isOpen, onClose, setUser }) => {
   );
 };
 
-export default AuthPopup;
+export default AuthPopup;

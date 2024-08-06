@@ -11,7 +11,7 @@ const SignUp = ({ onClose, setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', { name, email, password });
+      const response = await axios.post('http://localhost:3001/api/auth/register', { name, email, password });
       setUser(response.data.user);
       onClose();
     } catch (err) {
@@ -20,10 +20,7 @@ const SignUp = ({ onClose, setUser }) => {
   };
 
   return (
-    <div className="relative bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
-      <button className="absolute top-2 right-2 text-xl" onClick={onClose}>
-        &times;
-      </button>
+    <div>
       <h2 className="text-2xl font-semibold mb-4 text-center">Register</h2>
       {error && <p className="text-red-600 text-center">{error}</p>}
       <form className="space-y-4" onSubmit={handleSubmit}>

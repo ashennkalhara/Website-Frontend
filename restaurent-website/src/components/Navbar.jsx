@@ -26,6 +26,10 @@ const Navbar = () => {
     setIsAuthPopupOpen(false);
   };
 
+  const handleLogout = () => {
+    setUser(null);
+  };
+
   return (
     <div className="fixed w-full">
       <div className="flex flex-row justify-between p-5 md:px-32 px-5 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
@@ -89,7 +93,10 @@ const Navbar = () => {
           </button>
 
           {user ? (
-            <span className="text-lg font-medium">{user.name}</span>
+            <>
+              <span className="text-lg font-medium">{user.name}</span>
+              <Button title="Logout" onClick={handleLogout} />
+            </>
           ) : (
             <Button title="Login" onClick={handleOpenAuthPopup} />
           )}
@@ -127,7 +134,10 @@ const Navbar = () => {
           <FaShoppingCart size={24} />
         </button>
         {user ? (
-          <span className="text-lg font-medium">{user.name}</span>
+          <>
+            <span className="text-lg font-medium">{user.name}</span>
+            <Button title="Logout" onClick={handleLogout} />
+          </>
         ) : (
           <Button title="Login" onClick={handleOpenAuthPopup} />
         )}
