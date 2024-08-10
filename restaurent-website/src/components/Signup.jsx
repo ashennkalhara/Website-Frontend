@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
-import axios from 'axios';
 
 const SignUp = ({ onClose, setUser }) => {
   const [name, setName] = useState('');
@@ -11,11 +10,23 @@ const SignUp = ({ onClose, setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/register', { name, email, password });
-      setUser(response.data.user);
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      const data = await response.json();
+      setUser(data.user);
       onClose();
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err.message);
     }
   };
 

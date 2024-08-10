@@ -94,7 +94,7 @@ const Navbar = () => {
 
           {user ? (
             <>
-              <span className="text-lg font-medium">{user.name}</span>
+              <span className="text-lg font-medium text-orange-500">Hi, {user.name}</span>
               <Button title="Logout" onClick={handleLogout} />
             </>
           ) : (
@@ -135,7 +135,7 @@ const Navbar = () => {
         </button>
         {user ? (
           <>
-            <span className="text-lg font-medium">{user.name}</span>
+            <span className="text-lg font-medium text-orange-500">Hi, {user.name}</span>
             <Button title="Logout" onClick={handleLogout} />
           </>
         ) : (
