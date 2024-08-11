@@ -23,7 +23,14 @@ const SignUp = ({ onClose, setUser }) => {
       }
 
       const data = await response.json();
+
+      // Store the user data in localStorage
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // Update the user state
       setUser(data.user);
+      
+      // Close the modal
       onClose();
     } catch (err) {
       setError(err.message);
