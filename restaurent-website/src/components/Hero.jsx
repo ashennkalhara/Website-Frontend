@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Button from "../layouts/Button";
 import ReserveModal from "./ReserveModal";
 
-const Home = () => {
+const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -33,4 +33,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Hero;

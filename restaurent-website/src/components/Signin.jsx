@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
-import axios from 'axios';
 
 const SignIn = ({ onClose, setUser }) => {
   const [email, setEmail] = useState('');
@@ -10,11 +9,27 @@ const SignIn = ({ onClose, setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/login', { email, password });
-      setUser(response.data.user);
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+
+      const data = await response.json();
+      setUser(data.user);
+
+      // Save the user data to localStorage to persist the login state
+      localStorage.setItem('user', JSON.stringify(data.user));
+
       onClose();
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err.message);
     }
   };
 
@@ -64,4 +79,4 @@ const SignIn = ({ onClose, setUser }) => {
   );
 };
 
-export default SignIn;
+export default SignIn;
