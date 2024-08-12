@@ -1,20 +1,21 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminPanel from "./components/admin/AdminPanel";
 import StaffPanel from "./components/admin/StaffPanel";
 import Home from "./components/routes/Home";
+import PrivateRoute from './components/routes/PrivateRoute';
 
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-
-// src/App.jsx
 const App = () => {
   return (
-       <BrowserRouter>
-    
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<AdminPanel />} />
+        <Route 
+          path="/admin" 
+          element={<PrivateRoute element={AdminPanel} />} 
+        />
         <Route path="/staff" element={<StaffPanel />} />
       </Routes>
-
     </BrowserRouter>
   );
 }
