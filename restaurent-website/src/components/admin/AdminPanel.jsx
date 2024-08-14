@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReservationsManagement from './admin-functions/ReservationsManagement';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -121,12 +122,11 @@ const Dashboard = () => {
   );
 };
 
-const ReservationsManagement = () => {
+const App = () => {
   return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Reservations Management</h2>
-      <p className="text-gray-600">View, approve, or reject reservations.</p>
-      {/* Add reservation table/list with action buttons */}
+    <div>
+      {/* Use the ReservationsManagement component */}
+      <ReservationsManagement />
     </div>
   );
 };

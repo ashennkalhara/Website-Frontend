@@ -6,15 +6,27 @@ const ReserveModal = ({ isOpen, onClose }) => {
   const [time, setTime] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (name && date && time) {
-      console.log('Reservation details:', { name, date, time });
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        onClose();
-      }, 2000);
+      try {
+        const response = await fetch('http://localhost:3001/reservations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, date, time }),
+        });
+        const data = await response.json();
+        console.log('Reservation saved:', data);
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          onClose();
+        }, 2000);
+      } catch (error) {
+        console.error('Error saving reservation:', error);
+      }
     }
   };
 
