@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReservationsManagement from './admin-functions/ReservationsManagement';
 import GalleryManagement from './admin-functions/GalleryManagement';
+import OffersManagement from './admin-functions/OffersManagement';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -19,6 +20,8 @@ const AdminPanel = () => {
         return <UserManagement />;
       case 'content':
         return <GalleryManagement />;
+      case 'offers':
+        return <OffersManagement />;
       default:
         return <Dashboard />;
     }
@@ -100,7 +103,19 @@ const AdminPanel = () => {
                   }`}
                   onClick={() => setActiveTab('content')}
                 >
-                  Gallery 
+                  Gallery
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`px-4 py-2 rounded-md ${
+                    activeTab === 'offers'
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-gray-200 text-gray-700'
+                  }`}
+                  onClick={() => setActiveTab('offers')}
+                >
+                  Offers
                 </button>
               </li>
             </ul>
@@ -152,5 +167,6 @@ const UserManagement = () => {
     </div>
   );
 };
+
 
 export default AdminPanel;

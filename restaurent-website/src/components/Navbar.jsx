@@ -4,7 +4,6 @@ import { BiRestaurant } from 'react-icons/bi';
 import { FaShoppingCart } from 'react-icons/fa';
 import Button from '../layouts/Button';
 import { AiOutlineMenuUnfold, AiOutlineClose } from 'react-icons/ai';
-import { BiChevronDown } from 'react-icons/bi';
 import { CartContext } from '../contexts/CartContext';
 import AuthPopup from './AuthPopup';
 
@@ -71,56 +70,15 @@ const Navbar = () => {
             About
           </Link>
 
-          <div className="relative group">
-            <div className="flex items-center gap-1">
-              <Link
-                to="dishes"
-                spy={true}
-                smooth={true}
-                duration={500}
-                className="hover:text-brightColor transition-all cursor-pointer"
-              >
-                Meals
-              </Link>
-              <BiChevronDown className="cursor-pointer" size={25} />
-            </div>
-
-            <ul className="absolute hidden space-y-2 group-hover:block bg-white border border-gray-300 rounded-lg p-5">
-              <li>
-                <Link
-                  to="dishes"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                >
-                  Breakfast
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="dishes"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                >
-                  Lunch
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="dishes"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                >
-                  Dinner
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <Link
+            to="dishes"
+            spy={true}
+            smooth={true}
+            duration={500}
+            className="hover:text-brightColor transition-all cursor-pointer"
+          >
+            Menu
+          </Link>
 
           <Link
             to="menu"
@@ -129,7 +87,7 @@ const Navbar = () => {
             duration={500}
             className="hover:text-brightColor transition-all cursor-pointer"
           >
-            Menu
+            Offers
           </Link>
 
           <Link
