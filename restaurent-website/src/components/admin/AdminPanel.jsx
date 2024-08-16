@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReservationsManagement from './admin-functions/ReservationsManagement';
+import GalleryManagement from './admin-functions/GalleryManagement';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -17,7 +18,7 @@ const AdminPanel = () => {
       case 'users':
         return <UserManagement />;
       case 'content':
-        return <ContentManagement />;
+        return <GalleryManagement />;
       default:
         return <Dashboard />;
     }
@@ -99,7 +100,7 @@ const AdminPanel = () => {
                   }`}
                   onClick={() => setActiveTab('content')}
                 >
-                  Content Management
+                  Gallery 
                 </button>
               </li>
             </ul>
@@ -118,15 +119,6 @@ const Dashboard = () => {
       <h2 className="text-2xl font-semibold text-gray-700 mb-4">Dashboard</h2>
       <p className="text-gray-600">Overview of key metrics and activities.</p>
       {/* Add charts, stats, etc. */}
-    </div>
-  );
-};
-
-const App = () => {
-  return (
-    <div>
-      {/* Use the ReservationsManagement component */}
-      <ReservationsManagement />
     </div>
   );
 };
@@ -157,16 +149,6 @@ const UserManagement = () => {
       <h2 className="text-2xl font-semibold text-gray-700 mb-4">User Management</h2>
       <p className="text-gray-600">Manage different users with varying access rights.</p>
       {/* Add user management functionalities */}
-    </div>
-  );
-};
-
-const ContentManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Content Management</h2>
-      <p className="text-gray-600">Update and manage website content like menus, gallery, etc.</p>
-      {/* Add form or editor for updating website content */}
     </div>
   );
 };
