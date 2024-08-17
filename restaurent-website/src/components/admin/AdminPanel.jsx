@@ -3,6 +3,7 @@ import ReservationsManagement from './admin-functions/ReservationsManagement';
 import GalleryManagement from './admin-functions/GalleryManagement';
 import OffersManagement from './admin-functions/OffersManagement';
 import FoodManagement from './admin-functions/FoodManagement';
+import PaymentManagement from './admin-functions/PaymentManagement';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -16,7 +17,7 @@ const AdminPanel = () => {
       case 'queries':
         return <QueriesManagement />;
       case 'payments':
-        return <PaymentsManagement />;
+        return <PaymentManagement />;
       case 'users':
         return <UserManagement />;
       case 'content':

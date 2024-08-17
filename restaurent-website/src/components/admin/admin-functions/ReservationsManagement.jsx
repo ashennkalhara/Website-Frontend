@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const ReservationsManagement = () => {
   const [reservations, setReservations] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -15,6 +16,8 @@ const ReservationsManagement = () => {
         setReservations(data);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setLoading(false); // Set loading to false once data is fetched
       }
     };
 
@@ -22,22 +25,33 @@ const ReservationsManagement = () => {
   }, []);
 
   const formatDate = (isoDate) => {
-    const date = new Date(isoDate);
-    const formatter = new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-    const formattedDate = formatter.format(date);
-    const timeOptions = {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-    };
-    const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
-
-    return `${formattedDate} at ${formattedTime}`;
+    try {
+      const date = new Date(isoDate);
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+      const formattedDate = formatter.format(date);
+      const timeOptions = {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+      };
+      const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
+      return `${formattedDate} at ${formattedTime}`;
+    } catch (error) {
+      return 'Invalid date'; // Handle any date formatting errors
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="p-6 bg-gray-50 rounded-md shadow-md text-gray-600">
+        Loading reservations...
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -57,7 +71,7 @@ const ReservationsManagement = () => {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">    Date and Time   </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date and Time</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -78,4 +92,5 @@ const ReservationsManagement = () => {
     </div>
   );
 };
+
 export default ReservationsManagement;

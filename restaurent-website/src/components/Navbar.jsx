@@ -8,7 +8,7 @@ import { CartContext } from '../contexts/CartContext';
 import AuthPopup from './AuthPopup';
 
 const Navbar = () => {
-  const { toggleCartVisibility } = useContext(CartContext);
+  const { cart, toggleCartVisibility } = useContext(CartContext);
   const [menu, setMenu] = useState(false);
   const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -112,9 +112,14 @@ const Navbar = () => {
 
           <button
             onClick={toggleCartVisibility}
-            className="flex items-center gap-2 text-lg font-medium hover:text-brightColor transition-all cursor-pointer"
+            className="relative flex items-center gap-2 text-lg font-medium hover:text-brightColor transition-all cursor-pointer"
           >
             <FaShoppingCart size={24} />
+            {cart.length > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 text-xs">
+                {cart.length}
+              </span>
+            )}
           </button>
 
           {user ? (
@@ -203,9 +208,14 @@ const Navbar = () => {
         </Link>
         <button
           onClick={toggleCartVisibility}
-          className="text-lg font-medium hover:text-brightColor transition-all cursor-pointer"
+          className="relative text-lg font-medium hover:text-brightColor transition-all cursor-pointer"
         >
           <FaShoppingCart size={24} />
+          {cart.length > 0 && (
+            <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 text-xs">
+              {cart.length}
+            </span>
+          )}
         </button>
         {user ? (
           <>
