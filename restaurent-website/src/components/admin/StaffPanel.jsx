@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import ReservationsManagement from './admin-functions/ReservationsManagement';
+import FoodManagement from './admin-functions/FoodManagement';
+import QueryManagement from './admin-functions/QueryManagement';
 
 const StaffPanel = () => {
   const [activeTab, setActiveTab] = useState('reservations');
@@ -8,9 +11,9 @@ const StaffPanel = () => {
       case 'reservations':
         return <ReservationsManagement />;
       case 'queries':
-        return <QueriesManagement />;
-      case 'payments':
-        return <PaymentsManagement />;
+        return <QueryManagement />;
+      case 'food':
+        return <FoodManagement />;
       default:
         return <ReservationsManagement />;
     }
@@ -50,13 +53,13 @@ const StaffPanel = () => {
               <li>
                 <button
                   className={`px-4 py-2 rounded-md ${
-                    activeTab === 'payments'
+                    activeTab === 'food'
                       ? 'bg-orange-500 text-white'
                       : 'bg-gray-200 text-gray-700'
                   }`}
-                  onClick={() => setActiveTab('payments')}
+                  onClick={() => setActiveTab('food')}
                 >
-                  Payments
+                  Foods
                 </button>
               </li>
             </ul>
@@ -65,36 +68,6 @@ const StaffPanel = () => {
           <div className="content-area">{renderContent()}</div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const ReservationsManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Reservations Management</h2>
-      <p className="text-gray-600">View, approve, or reject reservations.</p>
-      {/* Add reservation table/list with action buttons */}
-    </div>
-  );
-};
-
-const QueriesManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Queries Management</h2>
-      <p className="text-gray-600">View and respond to customer queries.</p>
-      {/* Add a list of queries with response options */}
-    </div>
-  );
-};
-
-const PaymentsManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Payments Management</h2>
-      <p className="text-gray-600">View and manage payment transactions.</p>
-      {/* Add a list of payments with transaction details */}
     </div>
   );
 };
