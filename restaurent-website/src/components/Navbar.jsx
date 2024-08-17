@@ -51,7 +51,7 @@ const Navbar = () => {
 
         <nav className="hidden md:flex flex-row items-center text-lg font-medium gap-8">
           <Link
-            to="home"
+            to="hero"
             spy={true}
             smooth={true}
             duration={500}
