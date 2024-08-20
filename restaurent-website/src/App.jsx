@@ -4,6 +4,7 @@ import AdminPanel from "./components/admin/AdminPanel";
 import StaffPanel from "./components/admin/StaffPanel";
 import Home from "./components/routes/Home";
 import PrivateRoute from './components/routes/PrivateRoute';
+import StaffLogin from './components/staff/StaffLogin';
 
 const App = () => {
   return (
@@ -14,7 +15,9 @@ const App = () => {
           path="/admin" 
           element={<PrivateRoute element={AdminPanel} />} 
         />
-        <Route path="/staff" element={<StaffPanel />} />
+        
+        <Route path="/staffLogin" element={<StaffLogin />} />
+        <Route path="/staff" element={<StaffPanel />} /> 
       </Routes>
     </BrowserRouter>
   );

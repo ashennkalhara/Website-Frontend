@@ -1,50 +1,63 @@
-// src/components/Gallery.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaHeart } from 'react-icons/fa';
 
-import food1 from '../assets/img/food1.jpg';
-import food2 from '../assets/img/food2.jpg';
-import food3 from '../assets/img/food3.jpg';
-import food4 from '../assets/img/food4.jpg';
-import food5 from '../assets/img/food5.jpg';
-import food6 from '../assets/img/food6.jpg';
-import food7 from '../assets/img/food7.jpg';
-import food8 from '../assets/img/food8.jpg';
-import food9 from '../assets/img/food9.jpg';
-
 const Gallery = () => {
-  const images = [
-    { src: food1, alt: 'Food 1' },
-    { src: food2, alt: 'Food 2' },
-    { src: food3, alt: 'Food 3' },
-    { src: food4, alt: 'Food 4' },
-    { src: food5, alt: 'Food 5' },
-    { src: food6, alt: 'Food 6' },
-    { src: food7, alt: 'Food 7' },
-    { src: food8, alt: 'Food 8' },
-    { src: food9, alt: 'Food 9' },
-  ];
+  const [images, setImages] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/gallery/images');
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
+        }
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setImages(data);
+        } else {
+          throw new Error('API response is not an array of images');
+        }
+      } catch (error) {
+        console.error('Error fetching images:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
+  if (loading) {
+    return <p className="text-center text-gray-600">Loading images...</p>;
+  }
 
   return (
     <div className="py-16 bg-gray-100">
       <div className="container mx-auto px-5 text-center">
         <h2 className="text-3xl font-semibold mb-8">Our Gallery</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {images.map((image, index) => (
-            <div key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 max-h-60"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <button className="text-white text-lg p-2 rounded-full bg-red-600 hover:bg-red-700 transition-colors duration-300">
-                  <FaHeart />
-                </button>
+        {error ? (
+          <p className="text-red-500">{error}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {images.map((image, index) => (
+              <div key={index} className="relative bg-white shadow-md rounded-lg overflow-hidden">
+                <img
+                  src={`http://localhost:3001${image.filePath}`}
+                  alt={`Gallery ${index}`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-2 right-2">
+                  <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600">
+                    <FaHeart />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

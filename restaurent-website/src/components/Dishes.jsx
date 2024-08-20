@@ -1,26 +1,42 @@
-import React from "react";
-import img1 from "../assets/img/img1.jpg";
-import img2 from "../assets/img/img2.jpg";
-import img3 from "../assets/img/img3.jpg";
-import img4 from "../assets/img/img4.jpg";
-import img5 from "../assets/img/img5.jpg";
-import img6 from "../assets/img/img6.jpg";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import DishesCard from "../layouts/DishesCard";
 
 const Dishes = () => {
+  const [foods, setFoods] = useState([]);
+
+  useEffect(() => {
+    fetchFoods();
+  }, []);
+
+  const fetchFoods = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/foods');
+      setFoods(response.data);
+    } catch (error) {
+      console.error('Failed to fetch foods', error.response ? error.response.data : error.message);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center lg:px-32 px-5">
       <h1 className="text-4xl font-semibold text-center pt-24 pb-10">
-        Special Offers
+        Food Menu
       </h1>
 
-      <div className="flex flex-wrap gap-8 justify-center">
-        <DishesCard img={img1} title="Kottu Roti" price="LKR 900" rating={4.5} />
-        <DishesCard img={img2} title="Fish Ambul Thiyal" price="LKR 1100" rating={5} />
-        <DishesCard img={img3} title="Chicken Curry" price="LKR 950" rating={4} />
-        <DishesCard img={img4} title="Hoppers" price="LKR 850" rating={4.5} />
-        <DishesCard img={img5} title="String Hoppers" price="LKR 750" rating={3.5} />
-        <DishesCard img={img6} title="Lamprais" price="LKR 1300" rating={5} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {foods.length > 0 ? (
+          foods.map((food) => (
+            <DishesCard
+              key={food._id}
+              img={`http://localhost:3001/uploads/${food.image}`} 
+              title={food.name}
+              price={`LKR ${food.price}`}
+            />
+          ))
+        ) : (
+          <p className="text-gray-600">No dishes available.</p>
+        )}
       </div>
     </div>
   );

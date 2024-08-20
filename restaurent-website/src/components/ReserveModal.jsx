@@ -4,17 +4,30 @@ const ReserveModal = ({ isOpen, onClose }) => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [reservationType, setReservationType] = useState('dine-in');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (name && date && time) {
-      console.log('Reservation details:', { name, date, time });
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        onClose();
-      }, 2000);
+      try {
+        const response = await fetch('http://localhost:3001/reservations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, date, time, reservationType }),
+        });
+        const data = await response.json();
+        console.log('Reservation saved:', data);
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          onClose();
+        }, 2000);
+      } catch (error) {
+        console.error('Error saving reservation:', error);
+      }
     }
   };
 
@@ -73,9 +86,28 @@ const ReserveModal = ({ isOpen, onClose }) => {
                 onChange={(e) => setTime(e.target.value)}
               />
             </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Reservation Type
+              </label>
+              <div className="flex items-center">
+                <span className={`mr-4 ${reservationType === 'dine-in' ? 'font-bold text-orange-500' : 'text-gray-700'}`}>Dine-In</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only"
+                    checked={reservationType === 'delivery'}
+                    onChange={() => setReservationType(reservationType === 'dine-in' ? 'delivery' : 'dine-in')}
+                  />
+                  <div className="w-11 h-6 bg-gray-200 rounded-full"></div>
+                  <div className="w-6 h-6 bg-orange-500 rounded-full absolute top-0 left-0 transition-transform transform" style={{ transform: reservationType === 'delivery' ? 'translateX(100%)' : 'translateX(0)' }}></div>
+                </label>
+                <span className={`ml-4 ${reservationType === 'delivery' ? 'font-bold text-orange-500' : 'text-gray-700'}`}>Delivery</span>
+              </div>
+            </div>
             <div className="flex items-center justify-between">
               <button
-                className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
                 Reserve

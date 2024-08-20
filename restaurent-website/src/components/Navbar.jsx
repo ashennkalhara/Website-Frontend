@@ -4,18 +4,16 @@ import { BiRestaurant } from 'react-icons/bi';
 import { FaShoppingCart } from 'react-icons/fa';
 import Button from '../layouts/Button';
 import { AiOutlineMenuUnfold, AiOutlineClose } from 'react-icons/ai';
-import { BiChevronDown } from 'react-icons/bi';
 import { CartContext } from '../contexts/CartContext';
 import AuthPopup from './AuthPopup';
 
 const Navbar = () => {
-  const { toggleCartVisibility } = useContext(CartContext);
+  const { cart, toggleCartVisibility } = useContext(CartContext);
   const [menu, setMenu] = useState(false);
   const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if a user is already logged in by checking localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -35,7 +33,6 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    // Clear user state and remove from localStorage
     setUser(null);
     localStorage.removeItem('user');
   };
@@ -52,7 +49,7 @@ const Navbar = () => {
 
         <nav className="hidden md:flex flex-row items-center text-lg font-medium gap-8">
           <Link
-            to="home"
+            to="hero"
             spy={true}
             smooth={true}
             duration={500}
@@ -71,56 +68,15 @@ const Navbar = () => {
             About
           </Link>
 
-          <div className="relative group">
-            <div className="flex items-center gap-1">
-              <Link
-                to="dishes"
-                spy={true}
-                smooth={true}
-                duration={500}
-                className="hover:text-brightColor transition-all cursor-pointer"
-              >
-                Meals
-              </Link>
-              <BiChevronDown className="cursor-pointer" size={25} />
-            </div>
-
-            <ul className="absolute hidden space-y-2 group-hover:block bg-white border border-gray-300 rounded-lg p-5">
-              <li>
-                <Link
-                  to="dishes"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                >
-                  Breakfast
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="dishes"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                >
-                  Lunch
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="dishes"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  className="text-gray-800 hover:text-brightColor transition-all cursor-pointer"
-                >
-                  Dinner
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <Link
+            to="dishes"
+            spy={true}
+            smooth={true}
+            duration={500}
+            className="hover:text-brightColor transition-all cursor-pointer"
+          >
+            Menu
+          </Link>
 
           <Link
             to="menu"
@@ -129,7 +85,7 @@ const Navbar = () => {
             duration={500}
             className="hover:text-brightColor transition-all cursor-pointer"
           >
-            Menu
+            Offers
           </Link>
 
           <Link
@@ -154,9 +110,14 @@ const Navbar = () => {
 
           <button
             onClick={toggleCartVisibility}
-            className="flex items-center gap-2 text-lg font-medium hover:text-brightColor transition-all cursor-pointer"
+            className="relative flex items-center gap-2 text-lg font-medium hover:text-brightColor transition-all cursor-pointer"
           >
             <FaShoppingCart size={24} />
+            {cart.length > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 text-xs">
+                {cart.length}
+              </span>
+            )}
           </button>
 
           {user ? (
@@ -245,9 +206,14 @@ const Navbar = () => {
         </Link>
         <button
           onClick={toggleCartVisibility}
-          className="text-lg font-medium hover:text-brightColor transition-all cursor-pointer"
+          className="relative text-lg font-medium hover:text-brightColor transition-all cursor-pointer"
         >
           <FaShoppingCart size={24} />
+          {cart.length > 0 && (
+            <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 text-xs">
+              {cart.length}
+            </span>
+          )}
         </button>
         {user ? (
           <>

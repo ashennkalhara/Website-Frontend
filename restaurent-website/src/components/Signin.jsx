@@ -24,7 +24,6 @@ const SignIn = ({ onClose, setUser }) => {
       const data = await response.json();
       setUser(data.user);
 
-      // Save the user data to localStorage to persist the login state
       localStorage.setItem('user', JSON.stringify(data.user));
 
       onClose();

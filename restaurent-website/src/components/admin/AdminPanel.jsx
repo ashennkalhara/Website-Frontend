@@ -1,4 +1,11 @@
 import React, { useState } from 'react';
+import ReservationsManagement from './admin-functions/ReservationsManagement';
+import GalleryManagement from './admin-functions/GalleryManagement';
+import OffersManagement from './admin-functions/OffersManagement';
+import FoodManagement from './admin-functions/FoodManagement';
+import PaymentManagement from './admin-functions/PaymentManagement';
+import QueryManagement from './admin-functions/QueryManagement';
+import UserManagement from './admin-functions/UserManagement';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -10,13 +17,17 @@ const AdminPanel = () => {
       case 'reservations':
         return <ReservationsManagement />;
       case 'queries':
-        return <QueriesManagement />;
+        return <QueryManagement />;
       case 'payments':
-        return <PaymentsManagement />;
-      case 'users':
+        return <PaymentManagement />;
+      case 'staff':
         return <UserManagement />;
       case 'content':
-        return <ContentManagement />;
+        return <GalleryManagement />;
+      case 'offers':
+        return <OffersManagement />;
+      case 'food':
+        return <FoodManagement />;
       default:
         return <Dashboard />;
     }
@@ -74,19 +85,19 @@ const AdminPanel = () => {
                   }`}
                   onClick={() => setActiveTab('payments')}
                 >
-                  Payments
+                  Orders
                 </button>
               </li>
               <li>
                 <button
                   className={`px-4 py-2 rounded-md ${
-                    activeTab === 'users'
+                    activeTab === 'staff'
                       ? 'bg-orange-500 text-white'
                       : 'bg-gray-200 text-gray-700'
                   }`}
-                  onClick={() => setActiveTab('users')}
+                  onClick={() => setActiveTab('staff')}
                 >
-                  User Management
+                  Staff Management
                 </button>
               </li>
               <li>
@@ -98,7 +109,31 @@ const AdminPanel = () => {
                   }`}
                   onClick={() => setActiveTab('content')}
                 >
-                  Content Management
+                  Gallery
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`px-4 py-2 rounded-md ${
+                    activeTab === 'offers'
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-gray-200 text-gray-700'
+                  }`}
+                  onClick={() => setActiveTab('offers')}
+                >
+                  Offers
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`px-4 py-2 rounded-md ${
+                    activeTab === 'food'
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-gray-200 text-gray-700'
+                  }`}
+                  onClick={() => setActiveTab('food')}
+                >
+                  Foods
                 </button>
               </li>
             </ul>
@@ -117,56 +152,6 @@ const Dashboard = () => {
       <h2 className="text-2xl font-semibold text-gray-700 mb-4">Dashboard</h2>
       <p className="text-gray-600">Overview of key metrics and activities.</p>
       {/* Add charts, stats, etc. */}
-    </div>
-  );
-};
-
-const ReservationsManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Reservations Management</h2>
-      <p className="text-gray-600">View, approve, or reject reservations.</p>
-      {/* Add reservation table/list with action buttons */}
-    </div>
-  );
-};
-
-const QueriesManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Queries Management</h2>
-      <p className="text-gray-600">View and respond to customer queries.</p>
-      {/* Add a list of queries with response options */}
-    </div>
-  );
-};
-
-const PaymentsManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Payments Management</h2>
-      <p className="text-gray-600">View and manage payment transactions.</p>
-      {/* Add a list of payments with transaction details */}
-    </div>
-  );
-};
-
-const UserManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">User Management</h2>
-      <p className="text-gray-600">Manage different users with varying access rights.</p>
-      {/* Add user management functionalities */}
-    </div>
-  );
-};
-
-const ContentManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Content Management</h2>
-      <p className="text-gray-600">Update and manage website content like menus, gallery, etc.</p>
-      {/* Add form or editor for updating website content */}
     </div>
   );
 };

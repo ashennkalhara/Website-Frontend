@@ -35,11 +35,11 @@ const Home = () => {
                     <Gallery />
                 </div>
 
-                <QuerySection /> {/* Include the new component */}
+                <QuerySection /> {}
 
                 <Footer />
             </main>
-            <Cart /> {/* Ensure Cart is included here */}
+            <Cart /> {}
         </CartProvider>
     )
 }
