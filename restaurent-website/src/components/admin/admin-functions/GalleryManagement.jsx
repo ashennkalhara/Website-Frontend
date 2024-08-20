@@ -37,7 +37,7 @@ const GalleryManagement = () => {
             if (!response.ok) {
                 throw new Error('Delete failed');
             }
-            // Remove the image from the front-end state
+          
             setUploadedImages(uploadedImages.filter((_, i) => i !== index));
         } catch (error) {
             console.error('Error during deletion:', error);

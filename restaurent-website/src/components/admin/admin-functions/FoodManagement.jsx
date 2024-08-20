@@ -40,7 +40,7 @@ const FoodManagement = () => {
         },
       });
       alert('Food added successfully');
-      fetchFoods(); // Refresh the list of foods
+      fetchFoods(); 
       setName('');
       setPrice('');
       setImage(null);
@@ -55,7 +55,7 @@ const FoodManagement = () => {
       try {
         await axios.delete(`http://localhost:3001/api/foods/${id}`);
         alert('Food deleted successfully');
-        fetchFoods(); // Refresh the list of foods
+        fetchFoods(); 
       } catch (error) {
         console.error('Failed to delete food', error.response ? error.response.data : error.message);
         alert('Failed to delete food');

@@ -6,7 +6,6 @@ const Dishes = () => {
   const [foods, setFoods] = useState([]);
 
   useEffect(() => {
-    // Fetch foods when the component mounts
     fetchFoods();
   }, []);
 
@@ -30,7 +29,7 @@ const Dishes = () => {
           foods.map((food) => (
             <DishesCard
               key={food._id}
-              img={`http://localhost:3001/uploads/${food.image}`} // Update with the correct path to the image
+              img={`http://localhost:3001/uploads/${food.image}`} 
               title={food.name}
               price={`LKR ${food.price}`}
             />

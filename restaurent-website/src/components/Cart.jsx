@@ -17,7 +17,7 @@ const Cart = () => {
 
   const handleClosePaymentForm = () => {
     setPaymentFormVisible(false);
-    setErrorMessage(''); // Clear any previous error messages
+    setErrorMessage(''); 
   };
 
   const validatePaymentForm = () => {
@@ -25,7 +25,7 @@ const Cart = () => {
       setErrorMessage('All fields are required.');
       return false;
     }
-    // Add more validation logic if needed
+
     return true;
   };
 
@@ -33,16 +33,16 @@ const Cart = () => {
     e.preventDefault();
 
     if (!validatePaymentForm()) {
-      return; // Prevent submission if validation fails
+      return; 
     }
 
     const paymentDetails = {
       name,
       items: cart.map(item => ({
         title: item.title,
-        price: parseFloat(item.price.replace(/[^\d.-]/g, '')) // Remove currency symbols and convert to number
+        price: parseFloat(item.price.replace(/[^\d.-]/g, '')) 
       })),
-      total: parseFloat(calculateTotal().replace(/[^\d.-]/g, '')), // Remove currency symbols and convert to number
+      total: parseFloat(calculateTotal().replace(/[^\d.-]/g, '')), 
       cardNumber,
       expiryDate,
       cvv

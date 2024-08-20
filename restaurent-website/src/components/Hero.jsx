@@ -1,4 +1,3 @@
-// src/components/Home.jsx
 import React, { useState } from "react";
 import Button from "../layouts/Button";
 import ReserveModal from "./ReserveModal";

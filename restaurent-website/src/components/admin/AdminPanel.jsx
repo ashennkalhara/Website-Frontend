@@ -5,6 +5,7 @@ import OffersManagement from './admin-functions/OffersManagement';
 import FoodManagement from './admin-functions/FoodManagement';
 import PaymentManagement from './admin-functions/PaymentManagement';
 import QueryManagement from './admin-functions/QueryManagement';
+import UserManagement from './admin-functions/UserManagement';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -19,7 +20,7 @@ const AdminPanel = () => {
         return <QueryManagement />;
       case 'payments':
         return <PaymentManagement />;
-      case 'users':
+      case 'staff':
         return <UserManagement />;
       case 'content':
         return <GalleryManagement />;
@@ -90,13 +91,13 @@ const AdminPanel = () => {
               <li>
                 <button
                   className={`px-4 py-2 rounded-md ${
-                    activeTab === 'users'
+                    activeTab === 'staff'
                       ? 'bg-orange-500 text-white'
                       : 'bg-gray-200 text-gray-700'
                   }`}
-                  onClick={() => setActiveTab('users')}
+                  onClick={() => setActiveTab('staff')}
                 >
-                  User Management
+                  Staff Management
                 </button>
               </li>
               <li>
@@ -151,36 +152,6 @@ const Dashboard = () => {
       <h2 className="text-2xl font-semibold text-gray-700 mb-4">Dashboard</h2>
       <p className="text-gray-600">Overview of key metrics and activities.</p>
       {/* Add charts, stats, etc. */}
-    </div>
-  );
-};
-
-const QueriesManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Queries Management</h2>
-      <p className="text-gray-600">View and respond to customer queries.</p>
-      {/* Add a list of queries with response options */}
-    </div>
-  );
-};
-
-const PaymentsManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Payments Management</h2>
-      <p className="text-gray-600">View and manage payment transactions.</p>
-      {/* Add a list of payments with transaction details */}
-    </div>
-  );
-};
-
-const UserManagement = () => {
-  return (
-    <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">User Management</h2>
-      <p className="text-gray-600">Manage different users with varying access rights.</p>
-      {/* Add user management functionalities */}
     </div>
   );
 };

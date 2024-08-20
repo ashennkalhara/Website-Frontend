@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 const ReservationsManagement = () => {
   const [reservations, setReservations] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -17,7 +17,7 @@ const ReservationsManagement = () => {
       } catch (error) {
         setError(error.message);
       } finally {
-        setLoading(false); // Set loading to false once data is fetched
+        setLoading(false); 
       }
     };
 
@@ -41,7 +41,7 @@ const ReservationsManagement = () => {
       const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
       return `${formattedDate} at ${formattedTime}`;
     } catch (error) {
-      return 'Invalid date'; // Handle any date formatting errors
+      return 'Invalid date'; 
     }
   };
 

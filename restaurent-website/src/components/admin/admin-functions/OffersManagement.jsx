@@ -5,7 +5,6 @@ const OffersManagement = () => {
   const [offers, setOffers] = useState([]);
   const [newOffer, setNewOffer] = useState({ title: '', description: '' });
 
-  // Fetch offers from the server
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -18,7 +17,6 @@ const OffersManagement = () => {
     fetchOffers();
   }, []);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -30,7 +28,6 @@ const OffersManagement = () => {
     }
   };
 
-  // Handle offer removal
   const handleRemove = async (id) => {
     try {
       await axios.delete(`/api/offers/${id}`);

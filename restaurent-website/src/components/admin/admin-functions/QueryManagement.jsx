@@ -1,4 +1,3 @@
-// components/QueryManagement.jsx
 import React, { useState, useEffect } from 'react';
 
 const QueryManagement = () => {
@@ -26,8 +25,6 @@ const QueryManagement = () => {
   }, []);
 
   const handleReply = (email) => {
-    // You can implement your reply logic here, such as opening a form
-    // to send an email or redirecting to another page.
     console.log(`Reply to: ${email}`);
   };
 
@@ -50,7 +47,7 @@ const QueryManagement = () => {
                 <th className="py-2 px-4 border">Name</th>
                 <th className="py-2 px-4 border">Email</th>
                 <th className="py-2 px-4 border">Message</th>
-                <th className="py-2 px-4 border">Date</th>
+                <th className="py-2 px-4 border">Date & Time</th>
                 <th className="py-2 px-4 border">Action</th>
               </tr>
             </thead>

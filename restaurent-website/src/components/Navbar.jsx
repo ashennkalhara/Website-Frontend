@@ -14,7 +14,6 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if a user is already logged in by checking localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -34,7 +33,6 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    // Clear user state and remove from localStorage
     setUser(null);
     localStorage.removeItem('user');
   };

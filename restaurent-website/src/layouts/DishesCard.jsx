@@ -6,8 +6,7 @@ const DishesCard = ({ img, title, price }) => {
   const { addToCart } = useContext(CartContext);
 
   const handleAddToCart = () => {
-    const item = { id: Date.now(), title, price }; // Ensure a unique ID
-    addToCart(item);
+    const item = { id: Date.now(), title, price };
   };
 
   return (

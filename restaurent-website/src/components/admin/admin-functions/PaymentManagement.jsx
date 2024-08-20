@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
+import 'tailwindcss/tailwind.css'; 
 
 const PaymentManagement = () => {
     const [payments, setPayments] = useState([]);
@@ -9,7 +9,7 @@ const PaymentManagement = () => {
     const fetchPayments = async () => {
         try {
             const response = await axios.get('http://localhost:3001/api/payments');
-            console.log('Fetched payments:', response.data); // Log the response data
+            console.log('Fetched payments:', response.data); 
             setPayments(response.data);
         } catch (error) {
             console.error('Error fetching payment data:', error);

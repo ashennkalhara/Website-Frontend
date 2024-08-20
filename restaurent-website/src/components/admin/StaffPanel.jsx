@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import ReservationsManagement from './admin-functions/ReservationsManagement';
 import FoodManagement from './admin-functions/FoodManagement';
 import QueryManagement from './admin-functions/QueryManagement';
 
 const StaffPanel = () => {
   const [activeTab, setActiveTab] = useState('reservations');
+  const navigate = useNavigate(); // Hook for navigation
 
   const renderContent = () => {
     switch (activeTab) {
@@ -19,11 +21,24 @@ const StaffPanel = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    navigate('/staffLogin');
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md">
         <div className="p-6">
-          <h1 className="text-3xl font-bold mb-6 text-gray-800">Staff Panel</h1>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-bold text-gray-800">Staff Panel</h1>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300"
+            >
+              Logout
+            </button>
+          </div>
           <nav className="mb-6">
             <ul className="flex flex-wrap gap-4">
               <li>
