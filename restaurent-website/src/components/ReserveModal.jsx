@@ -11,7 +11,7 @@ const ReserveModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     if (name && date && time) {
       try {
-        const response = await fetch('http://localhost:3001/reservations', {
+        const response = await fetch('http://localhost:3000/reservations', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

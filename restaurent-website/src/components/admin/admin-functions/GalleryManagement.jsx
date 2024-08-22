@@ -14,7 +14,7 @@ const GalleryManagement = () => {
         formData.append('image', selectedFile);
 
         try {
-            const response = await fetch('http://localhost:3001/gallery/upload', {
+            const response = await fetch('http://localhost:3000/gallery/upload', {
                 method: 'POST',
                 body: formData,
             });
@@ -31,7 +31,7 @@ const GalleryManagement = () => {
 
     const handleDelete = async (index, imageId) => {
         try {
-            const response = await fetch(`http://localhost:3001/gallery/delete/${imageId}`, {
+            const response = await fetch(`http://localhost:3000/gallery/delete/${imageId}`, {
                 method: 'DELETE',
             });
             if (!response.ok) {
@@ -47,7 +47,7 @@ const GalleryManagement = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await fetch('http://localhost:3001/gallery/images');
+                const response = await fetch('http://localhost:3000/gallery/images');
                 if (!response.ok) {
                     throw new Error('Failed to fetch images');
                 }
@@ -91,7 +91,7 @@ const GalleryManagement = () => {
                             <tr key={index} className="border-b border-gray-200">
                                 <td className="py-4 px-6">
                                     <img 
-                                        src={`http://localhost:3001${image.filePath}`} 
+                                        src={`http://localhost:3000${image.filePath}`} 
                                         alt={`Uploaded ${index}`} 
                                         className="w-24 h-24 object-cover rounded-md shadow-sm border border-gray-200" 
                                     />

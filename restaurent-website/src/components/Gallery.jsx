@@ -9,7 +9,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch('http://localhost:3001/gallery/images');
+        const response = await fetch('http://localhost:3000/gallery/images');
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
         }
@@ -45,7 +45,7 @@ const Gallery = () => {
             {images.map((image, index) => (
               <div key={index} className="relative bg-white shadow-md rounded-lg overflow-hidden">
                 <img
-                  src={`http://localhost:3001${image.filePath}`}
+                  src={`http://localhost:3000${image.filePath}`}
                   alt={`Gallery ${index}`}
                   className="w-full h-full object-cover"
                 />

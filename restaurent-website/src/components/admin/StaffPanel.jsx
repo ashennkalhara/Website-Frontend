@@ -22,7 +22,7 @@ const StaffPanel = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('staffToken');
     navigate('/staffLogin');
   };
 

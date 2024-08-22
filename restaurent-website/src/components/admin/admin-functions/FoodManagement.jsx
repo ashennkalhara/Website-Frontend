@@ -13,7 +13,7 @@ const FoodManagement = () => {
 
   const fetchFoods = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/foods');
+      const response = await axios.get('http://localhost:3000/api/foods');
       setFoods(response.data);
     } catch (error) {
       console.error('Failed to fetch foods', error.response ? error.response.data : error.message);
@@ -23,10 +23,7 @@ const FoodManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !price || !image) {
-      alert('All fields are required');
-      return;
-    }
+ 
 
     const formData = new FormData();
     formData.append('name', name);
@@ -34,28 +31,35 @@ const FoodManagement = () => {
     formData.append('image', image);
 
     try {
-      await axios.post('http://localhost:3001/api/foods', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      await axios.post('http://localhost:3000/api/foods', formData, {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+          },
       });
       alert('Food added successfully');
-      fetchFoods(); 
+      fetchFoods();
+
       setName('');
       setPrice('');
       setImage(null);
-    } catch (error) {
+
+      // Safely reset the file input field
+      const fileInput = document.getElementById('fileInput');
+      if (fileInput) {
+          fileInput.value = '';
+      }
+  } catch (error) {
       console.error('Failed to add food', error.response ? error.response.data : error.message);
       alert('Failed to add food');
-    }
-  };
+  }
+};
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this food item?')) {
       try {
-        await axios.delete(`http://localhost:3001/api/foods/${id}`);
+        await axios.delete(`http://localhost:3000/api/foods/${id}`);
         alert('Food deleted successfully');
-        fetchFoods(); 
+        fetchFoods();
       } catch (error) {
         console.error('Failed to delete food', error.response ? error.response.data : error.message);
         alert('Failed to delete food');
@@ -110,7 +114,7 @@ const FoodManagement = () => {
             foods.map((food) => (
               <div key={food._id} className="border rounded-md p-4 bg-white shadow-md">
                 <img
-                  src={`http://localhost:3001/uploads/${food.image}`}
+                  src={`http://localhost:3000/uploads/${food.image}`}
                   alt={food.name}
                   className="w-full h-32 object-cover mb-4 rounded-md"
                 />

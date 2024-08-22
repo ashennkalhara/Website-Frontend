@@ -4,7 +4,8 @@ import AdminPanel from "./components/admin/AdminPanel";
 import StaffPanel from "./components/admin/StaffPanel";
 import Home from "./components/routes/Home";
 import PrivateRoute from './components/routes/PrivateRoute';
-import StaffLogin from './components/staff/StaffLogin';
+import StaffLogin from './components/StaffLogin';
+import ProtectedRoute from './components/routes/ProtectedRoute';
 
 const App = () => {
   return (
@@ -13,11 +14,13 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route 
           path="/admin" 
-          element={<PrivateRoute element={AdminPanel} />} 
+          element={<PrivateRoute element={AdminPanel} role="admin" />} 
         />
-        
-        <Route path="/staffLogin" element={<StaffLogin />} />
-        <Route path="/staff" element={<StaffPanel />} /> 
+        <Route path="/StaffLogin" element={<StaffLogin />} />
+        <Route 
+          path="/staff" 
+          element={<ProtectedRoute element={StaffPanel} role="staff" />} 
+        />
       </Routes>
     </BrowserRouter>
   );

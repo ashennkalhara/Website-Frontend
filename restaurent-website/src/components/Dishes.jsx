@@ -11,7 +11,7 @@ const Dishes = () => {
 
   const fetchFoods = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/foods');
+      const response = await axios.get('http://localhost:3000/api/foods');
       setFoods(response.data);
     } catch (error) {
       console.error('Failed to fetch foods', error.response ? error.response.data : error.message);
@@ -29,7 +29,7 @@ const Dishes = () => {
           foods.map((food) => (
             <DishesCard
               key={food._id}
-              img={`http://localhost:3001/uploads/${food.image}`} 
+              img={`http://localhost:3000/uploads/${food.image}`} 
               title={food.name}
               price={`LKR ${food.price}`}
             />
