@@ -1,12 +1,16 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ element, ...rest }) => {
-  const storedUser = localStorage.getItem('user');
-  const user = storedUser ? JSON.parse(storedUser) : null;
-  const isAdmin = user?.isAdmin;
+const ProtectedRoute = ({ element }) => {
+  const staffToken = localStorage.getItem('staffToken');
 
-  return isAdmin ? React.cloneElement(element, { ...rest }) : <Navigate to="/staffLogin" />;
+  if (!staffToken) {
+    // If no token is found, redirect to the staff login page
+    return <Navigate to="/staffLogin" replace />;
+  }
+
+  // If the token is found, render the protected component
+  return React.createElement(element);
 };
 
 export default ProtectedRoute;

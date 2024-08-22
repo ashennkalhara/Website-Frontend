@@ -11,7 +11,7 @@ const QuerySection = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/api/queries/save', {
+      const response = await fetch('http://localhost:3000/api/queries/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

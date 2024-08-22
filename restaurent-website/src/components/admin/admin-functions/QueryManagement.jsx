@@ -8,7 +8,7 @@ const QueryManagement = () => {
   useEffect(() => {
     const fetchQueries = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/queries/all');
+        const response = await fetch('http://localhost:3000/api/queries/all');
         if (!response.ok) {
           throw new Error('Failed to fetch queries');
         }

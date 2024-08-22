@@ -7,6 +7,7 @@ const DishesCard = ({ img, title, price }) => {
 
   const handleAddToCart = () => {
     const item = { id: Date.now(), title, price };
+    addToCart(item)
   };
 
   return (
