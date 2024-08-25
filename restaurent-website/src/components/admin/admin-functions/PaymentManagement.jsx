@@ -17,6 +17,17 @@ const PaymentManagement = () => {
         }
     };
 
+    const confirmPayment = async (paymentId) => {
+        try {
+            await axios.post(`http://localhost:3000/api/payments/confirm/${paymentId}`);
+            alert('Payment confirmed!');
+            fetchPayments(); // Refresh the payments list after confirmation
+        } catch (error) {
+            console.error('Error confirming payment:', error);
+            alert('Failed to confirm payment. Please try again.');
+        }
+    };
+
     useEffect(() => {
         fetchPayments();
     }, []);
@@ -52,6 +63,12 @@ const PaymentManagement = () => {
                             </div>
                             <p className="text-gray-700 mb-2"><strong>Total:</strong> Rs.{payment.total.toFixed(2)}</p>
                             <p className="text-gray-700"><strong>Date:</strong> {formatDate(payment.date)}</p>
+                            <button 
+                                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                                onClick={() => confirmPayment(payment._id)}
+                            >
+                                Confirm
+                            </button>
                         </div>
                     ))
                 ) : (
