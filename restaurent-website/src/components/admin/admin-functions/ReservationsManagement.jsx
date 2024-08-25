@@ -6,23 +6,23 @@ const ReservationsManagement = () => {
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/reservations');
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        const data = await response.json();
-        setReservations(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false); 
-      }
-    };
-
     fetchReservations();
   }, []);
+
+  const fetchReservations = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/reservations');
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const data = await response.json();
+      setReservations(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false); 
+    }
+  };
 
   const formatDate = (isoDate) => {
     try {
@@ -38,10 +38,31 @@ const ReservationsManagement = () => {
         minute: '2-digit',
         hour12: true,
       };
-      const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
-      return `${formattedDate} at ${formattedTime}`;
+      // const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
+      return `${formattedDate} `;
     } catch (error) {
       return 'Invalid date'; 
+    }
+  };
+
+  const updateReservationStatus = async (id, status) => {
+    try {
+      const response = await fetch(`http://localhost:3000/reservations/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update reservation status: ${response.statusText}`);
+      }
+
+      // Re-fetch reservations after updating the status
+      fetchReservations();
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -72,6 +93,7 @@ const ReservationsManagement = () => {
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date and Time</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -79,10 +101,21 @@ const ReservationsManagement = () => {
             {reservations.map((reservation) => (
               <tr key={reservation._id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{reservation.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(reservation.date)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(reservation.date)} at {reservation.time}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{reservation.status}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <button className="bg-green-500 text-white px-3 py-1 rounded-md mr-2">Approve</button>
-                  <button className="bg-red-500 text-white px-3 py-1 rounded-md">Reject</button>
+                  <button 
+                    onClick={() => updateReservationStatus(reservation._id, 'Approved')} 
+                    className="bg-green-500 text-white px-3 py-1 rounded-md mr-2"
+                  >
+                    Approve
+                  </button>
+                  <button 
+                    onClick={() => updateReservationStatus(reservation._id, 'Rejected')} 
+                    className="bg-red-500 text-white px-3 py-1 rounded-md"
+                  >
+                    Reject
+                  </button>
                 </td>
               </tr>
             ))}

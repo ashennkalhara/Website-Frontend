@@ -4,19 +4,20 @@ const ReserveModal = ({ isOpen, onClose }) => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [email,setEmail] =useState('');
   const [reservationType, setReservationType] = useState('dine-in');
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (name && date && time) {
+    if (name && email &&  date && time) {
       try {
         const response = await fetch('http://localhost:3000/reservations', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ name, date, time, reservationType }),
+          body: JSON.stringify({ name, date, time,email, reservationType }),
         });
         const data = await response.json();
         console.log('Reservation saved:', data);
@@ -60,6 +61,19 @@ const ReserveModal = ({ isOpen, onClose }) => {
                 placeholder="Your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                Email
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                type="text"
+                placeholder="Your Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-4">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import ReservationsManagement from './admin-functions/ReservationsManagement';
-import FoodManagement from './admin-functions/FoodManagement';
+import PaymentManagement from './admin-functions/PaymentManagement';
 import QueryManagement from './admin-functions/QueryManagement';
 
 const StaffPanel = () => {
@@ -14,8 +14,8 @@ const StaffPanel = () => {
         return <ReservationsManagement />;
       case 'queries':
         return <QueryManagement />;
-      case 'food':
-        return <FoodManagement />;
+      case 'orders':
+        return <PaymentManagement />;
       default:
         return <ReservationsManagement />;
     }
@@ -68,13 +68,13 @@ const StaffPanel = () => {
               <li>
                 <button
                   className={`px-4 py-2 rounded-md ${
-                    activeTab === 'food'
+                    activeTab === 'orders'
                       ? 'bg-orange-500 text-white'
                       : 'bg-gray-200 text-gray-700'
                   }`}
-                  onClick={() => setActiveTab('food')}
+                  onClick={() => setActiveTab('orders')}
                 >
-                  Foods
+                  Orders
                 </button>
               </li>
             </ul>

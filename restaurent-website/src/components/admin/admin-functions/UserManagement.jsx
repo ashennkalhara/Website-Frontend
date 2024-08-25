@@ -35,7 +35,7 @@ const StaffManagement = () => {
         setName('');
         setEmail('');
         setPassword('');
-        fetchStaffList(); // Refresh staff list after adding a new staff member
+        fetchStaffList(); 
       }
     } catch (error) {
       setLoading(false);
@@ -45,18 +45,17 @@ const StaffManagement = () => {
 
   const handleDelete = async (staffId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/staff/${staffId}`);
-      fetchStaffList(); // Refresh staff list after deletion
+        await axios.delete(`http://localhost:3000/api/staff/${staffId}`); 
+        fetchStaffList(); 
     } catch (error) {
-      console.error('Failed to delete staff', error.response ? error.response.data : error.message);
+        console.error('Failed to delete staff', error.response ? error.response.data : error.message);
     }
-  };
+};
 
   return (
     <div className="min-h-screen p-8">
       <h1 className="text-3xl font-semibold mb-6">Staff Management</h1>
       
-      {/* Add Staff Form */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Add New Staff</h2>
         <form onSubmit={handleAddStaff} className="space-y-4">
@@ -100,7 +99,6 @@ const StaffManagement = () => {
         </form>
       </div>
 
-      {/* Staff List */}
       <div className="bg-white shadow-lg rounded-lg p-6">
         <table className="w-full table-auto">
           <thead>
@@ -121,7 +119,7 @@ const StaffManagement = () => {
                       className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
                       onClick={() => handleDelete(staff._id)}
                     >
-                      Delete
+                      Remove
                     </button>
                   </td>
                 </tr>
