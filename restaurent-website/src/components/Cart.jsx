@@ -9,6 +9,7 @@ const Cart = () => {
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
   const [name, setName] = useState('');
+  const [email, setEmail] = useState(''); // Added email state
   const [errorMessage, setErrorMessage] = useState('');
 
   const handlePayNowClick = () => {
@@ -17,12 +18,18 @@ const Cart = () => {
 
   const handleClosePaymentForm = () => {
     setPaymentFormVisible(false);
-    setErrorMessage(''); 
+    setErrorMessage('');
   };
 
   const validatePaymentForm = () => {
-    if (!name || !cardNumber || !expiryDate || !cvv) {
+    if (!name || !email || !cardNumber || !expiryDate || !cvv) {
       setErrorMessage('All fields are required.');
+      return false;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setErrorMessage('Please enter a valid email address.');
       return false;
     }
 
@@ -33,16 +40,17 @@ const Cart = () => {
     e.preventDefault();
 
     if (!validatePaymentForm()) {
-      return; 
+      return;
     }
 
     const paymentDetails = {
       name,
+      email, // Include email in payment details
       items: cart.map(item => ({
         title: item.title,
-        price: parseFloat(item.price.replace(/[^\d.-]/g, '')) 
+        price: parseFloat(item.price.replace(/[^\d.-]/g, ''))
       })),
-      total: parseFloat(calculateTotal().replace(/[^\d.-]/g, '')), 
+      total: parseFloat(calculateTotal().replace(/[^\d.-]/g, '')),
       cardNumber,
       expiryDate,
       cvv
@@ -127,6 +135,17 @@ const Cart = () => {
                   onChange={(e) => setName(e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
                   placeholder="John Doe"
+                  required
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-gray-700 font-medium mb-2">Email</label> {/* Added email input */}
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  placeholder="johndoe@example.com"
                   required
                 />
               </div>
