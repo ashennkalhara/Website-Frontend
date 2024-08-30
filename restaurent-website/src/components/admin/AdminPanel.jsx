@@ -6,6 +6,7 @@ import FoodManagement from './admin-functions/FoodManagement';
 import PaymentManagement from './admin-functions/PaymentManagement';
 import QueryManagement from './admin-functions/QueryManagement';
 import UserManagement from './admin-functions/UserManagement';
+import AdminDashboard from './admin-functions/AdminDashboard';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -149,9 +150,7 @@ const AdminPanel = () => {
 const Dashboard = () => {
   return (
     <div className="p-6 bg-gray-50 rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Dashboard</h2>
-      <p className="text-gray-600">Overview of key metrics and activities.</p>
-      {/* Add charts, stats, etc. */}
+      <AdminDashboard/>
     </div>
   );
 };
