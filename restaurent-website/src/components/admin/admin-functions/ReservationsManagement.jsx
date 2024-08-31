@@ -11,7 +11,7 @@ const ReservationsManagement = () => {
 
   const fetchReservations = async () => {
     try {
-      const response = await fetch('http://localhost:3000/reservations');
+      const response = await fetch('http://localhost:3000/api/reservations');
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }

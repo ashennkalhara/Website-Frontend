@@ -37,7 +37,7 @@ const GalleryManagement = () => {
             if (!response.ok) {
                 throw new Error('Delete failed');
             }
-          
+
             setUploadedImages(uploadedImages.filter((_, i) => i !== index));
         } catch (error) {
             console.error('Error during deletion:', error);
@@ -78,36 +78,24 @@ const GalleryManagement = () => {
                 </button>
             </form>
 
-            <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
-                    <thead>
-                        <tr className="bg-gray-100 border-b border-gray-200">
-                            <th className="py-3 px-6 text-left text-sm font-semibold text-gray-700">Image</th>
-                            <th className="py-3 px-6 text-left text-sm font-semibold text-gray-700">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {uploadedImages.map((image, index) => (
-                            <tr key={index} className="border-b border-gray-200">
-                                <td className="py-4 px-6">
-                                    <img 
-                                        src={`http://localhost:3000${image.filePath}`} 
-                                        alt={`Uploaded ${index}`} 
-                                        className="w-24 h-24 object-cover rounded-md shadow-sm border border-gray-200" 
-                                    />
-                                </td>
-                                <td className="py-4 px-6">
-                                    <button
-                                        onClick={() => handleDelete(index, image._id)}
-                                        className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {uploadedImages.map((image, index) => (
+                    <div key={index} className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+                        <img 
+                            src={`http://localhost:3000${image.filePath}`} 
+                            alt={`Uploaded ${index}`} 
+                            className="w-full h-48 object-cover" 
+                        />
+                        <div className="p-4">
+                            <button
+                                onClick={() => handleDelete(index, image._id)}
+                                className="w-full px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

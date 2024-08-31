@@ -19,6 +19,10 @@ const AdminDashboard = () => {
         repliedCount: 0,
         pendingCount: 0,
     });
+    const [resCounts, setResCounts] = useState({
+        acceptedCount: 0,
+        rejectedCount: 0,
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,6 +35,9 @@ const AdminDashboard = () => {
 
                 const queryResponse = await axios.get('http://localhost:3000/api/queries/query-counts');
                 setQueryCounts(queryResponse.data);
+
+                const resResponse = await axios.get('http://localhost:3000/api/reservations/reservation-counts');
+                setResCounts(resResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error.message);
             }
@@ -48,6 +55,11 @@ const AdminDashboard = () => {
     const queryData = [
         { name: 'Replied Queries', value: queryCounts.repliedCount },
         { name: 'Pending Queries', value: queryCounts.pendingCount },
+    ];
+
+    const reservationData = [
+        { name: 'Accepted Reservations', value: resCounts.acceptedCount },
+        { name: 'Rejected Reservations', value: resCounts.rejectedCount },
     ];
 
     return (
@@ -179,6 +191,35 @@ const AdminDashboard = () => {
                                 dataKey="value"
                             >
                                 {orderData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip />
+                            <Legend verticalAlign="bottom" height={36} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </CardContent>
+            </Card>
+
+            {/* Pie Chart for Reservations */}
+            <Card sx={{ padding: '2rem', boxShadow: 4, borderRadius: '16px', marginBottom: '2rem' }}>
+                <CardContent>
+                    <Typography variant="h5" align="center" gutterBottom>
+                        Reservations Breakdown
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={400}>
+                        <PieChart>
+                            <Pie
+                                data={reservationData}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={false}
+                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                outerRadius={150}
+                                fill="#8884d8"
+                                dataKey="value"
+                            >
+                                {reservationData.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>

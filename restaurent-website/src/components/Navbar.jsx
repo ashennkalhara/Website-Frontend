@@ -2,9 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { BiRestaurant } from 'react-icons/bi';
 import { FaShoppingCart } from 'react-icons/fa';
-import Button from '../layouts/Button';
 import { AiOutlineMenuUnfold, AiOutlineClose } from 'react-icons/ai';
 import { CartContext } from '../contexts/CartContext';
+import Button from '../layouts/Button';
 import AuthPopup from './AuthPopup';
 
 const Navbar = () => {
@@ -12,6 +12,7 @@ const Navbar = () => {
   const [menu, setMenu] = useState(false);
   const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -37,8 +38,18 @@ const Navbar = () => {
     localStorage.removeItem('user');
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    // Implement your search logic here
+    console.log('Searching for:', searchQuery);
+  };
+
   return (
-    <div className="fixed w-full">
+    <div className="fixed w-full z-50">
       <div className="flex flex-row justify-between p-5 md:px-32 px-5 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
         <div className="flex flex-row items-center cursor-pointer">
           <span>
@@ -57,7 +68,6 @@ const Navbar = () => {
           >
             Home
           </Link>
-
           <Link
             to="about"
             spy={true}
@@ -67,7 +77,6 @@ const Navbar = () => {
           >
             About
           </Link>
-
           <Link
             to="dishes"
             spy={true}
@@ -77,7 +86,6 @@ const Navbar = () => {
           >
             Menu
           </Link>
-
           <Link
             to="menu"
             spy={true}
@@ -87,7 +95,6 @@ const Navbar = () => {
           >
             Offers
           </Link>
-
           <Link
             to="services"
             spy={true}
@@ -97,7 +104,6 @@ const Navbar = () => {
           >
             Services
           </Link>
-
           <Link
             to="gallery"
             spy={true}
@@ -107,6 +113,23 @@ const Navbar = () => {
           >
             Gallery
           </Link>
+
+          {/* Search Bar */}
+          <form onSubmit={handleSearchSubmit} className="relative">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search..."
+              className="pl-4 pr-10 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            />
+            <button
+              type="submit"
+              className="absolute right-0 top-0 mt-2 mr-3 text-gray-500 hover:text-gray-700 focus:outline-none"
+            >
+              🔍
+            </button>
+          </form>
 
           <button
             onClick={toggleCartVisibility}
