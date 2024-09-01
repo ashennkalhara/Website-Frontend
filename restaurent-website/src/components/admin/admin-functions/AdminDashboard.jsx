@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Box, Typography, Card, CardContent, Grid } from '@mui/material';
-import { Person, Assignment, AssignmentTurnedIn } from '@mui/icons-material';
+import { Box, Typography, Card, CardContent, Grid, Button } from '@mui/material';
+import { Person, Assignment, AssignmentTurnedIn, Download } from '@mui/icons-material';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const COLORS = ['#FF6F61', '#6B5B95', '#88B04B', '#FFBB28'];
 
@@ -62,9 +64,66 @@ const AdminDashboard = () => {
         { name: 'Rejected Reservations', value: resCounts.rejectedCount },
     ];
 
+    const handleDownloadPdf = () => {
+        const doc = new jsPDF();
+    
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0]; 
+    
+        doc.setFontSize(18);
+        doc.text(`The Heritage Grill Admin Summary Report - ${formattedDate}`, 14, 22);
+
+        doc.setFontSize(14);
+        doc.text('Orders Summary', 14, 40);
+        doc.autoTable({
+            startY: 45,
+            head: [['Pending', 'Confirmed', 'Ready', 'Total']],
+            body: [
+                [orderCounts.pending, orderCounts.confirmed, orderCounts.ready, orderCounts.total],
+            ],
+        });
+
+        doc.text('Staff Summary', 14, doc.autoTable.previous.finalY + 10);
+        doc.autoTable({
+            startY: doc.autoTable.previous.finalY + 15,
+            head: [['Total Staff']],
+            body: [[staffCount]],
+        });
+
+        doc.text('Queries Summary', 14, doc.autoTable.previous.finalY + 10);
+        doc.autoTable({
+            startY: doc.autoTable.previous.finalY + 15,
+            head: [['Replied Queries', 'Pending Queries']],
+            body: [
+                [queryCounts.repliedCount, queryCounts.pendingCount],
+            ],
+        });
+
+        doc.text('Reservations Summary', 14, doc.autoTable.previous.finalY + 10);
+        doc.autoTable({
+            startY: doc.autoTable.previous.finalY + 15,
+            head: [['Accepted Reservations', 'Rejected Reservations']],
+            body: [
+                [resCounts.acceptedCount, resCounts.rejectedCount],
+            ],
+        });
+
+        doc.save('dashboard_summary.pdf');
+    };
+
     return (
         <Box sx={{ padding: '2rem', backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
-            <Grid container spacing={3} sx={{ marginBottom: '2rem' }}>
+            <Button
+                variant="contained"
+                color="primary"
+                startIcon={<Download />}
+                onClick={handleDownloadPdf}
+                sx={{ marginBottom: '1rem' }}
+            >
+                Download PDF
+            </Button>
+
+            <Grid container spacing={2}>
                 {/* Order Counts */}
                 <Grid item xs={12} sm={4}>
                     <Card
@@ -73,11 +132,12 @@ const AdminDashboard = () => {
                             borderRadius: '16px',
                             background: 'linear-gradient(45deg, #FF6F61, #FFBB28)',
                             color: '#fff',
+                            height: '100%',
                         }}
                     >
                         <CardContent>
                             <AssignmentTurnedIn fontSize="large" sx={{ marginBottom: '0.5rem' }} />
-                            <Typography variant="h5" align="center">
+                            <Typography variant="h6" align="center">
                                 Pending Orders
                             </Typography>
                             <Typography variant="h4" align="center" fontWeight="bold">
@@ -93,11 +153,12 @@ const AdminDashboard = () => {
                             borderRadius: '16px',
                             background: 'linear-gradient(45deg, #6B5B95, #FF6F61)',
                             color: '#fff',
+                            height: '100%',
                         }}
                     >
                         <CardContent>
                             <Assignment fontSize="large" sx={{ marginBottom: '0.5rem' }} />
-                            <Typography variant="h5" align="center">
+                            <Typography variant="h6" align="center">
                                 Confirmed Orders
                             </Typography>
                             <Typography variant="h4" align="center" fontWeight="bold">
@@ -113,11 +174,12 @@ const AdminDashboard = () => {
                             borderRadius: '16px',
                             background: 'linear-gradient(45deg, #88B04B, #6B5B95)',
                             color: '#fff',
+                            height: '100%',
                         }}
                     >
                         <CardContent>
                             <AssignmentTurnedIn fontSize="large" sx={{ marginBottom: '0.5rem' }} />
-                            <Typography variant="h5" align="center">
+                            <Typography variant="h6" align="center">
                                 Ready Orders
                             </Typography>
                             <Typography variant="h4" align="center" fontWeight="bold">
@@ -128,18 +190,19 @@ const AdminDashboard = () => {
                 </Grid>
 
                 {/* Staff Count */}
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={4}>
                     <Card
                         sx={{
                             boxShadow: 4,
                             borderRadius: '16px',
                             background: 'linear-gradient(45deg, #0088FE, #88B04B)',
                             color: '#fff',
+                            height: '100%',
                         }}
                     >
                         <CardContent>
                             <Person fontSize="large" sx={{ marginBottom: '0.5rem' }} />
-                            <Typography variant="h5" align="center">
+                            <Typography variant="h6" align="center">
                                 Total Staff Members
                             </Typography>
                             <Typography variant="h4" align="center" fontWeight="bold">
@@ -150,85 +213,119 @@ const AdminDashboard = () => {
                 </Grid>
 
                 {/* Query Counts */}
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={4}>
                     <Card
                         sx={{
                             boxShadow: 4,
                             borderRadius: '16px',
                             background: 'linear-gradient(45deg, #FF6F61, #0088FE)',
                             color: '#fff',
+                            height: '100%',
                         }}
                     >
                         <CardContent>
                             <Assignment fontSize="large" sx={{ marginBottom: '0.5rem' }} />
-                            <Typography variant="h5" align="center">
+                            <Typography variant="h6" align="center">
                                 Queries Breakdown
                             </Typography>
-                            <Typography variant="h4" align="center" fontWeight="bold">
+                            <Typography variant="h5" align="center" fontWeight="bold">
                                 Replied: {queryCounts.repliedCount} | Pending: {queryCounts.pendingCount}
                             </Typography>
                         </CardContent>
                     </Card>
                 </Grid>
+
+                {/* Pie Charts */}
+                <Grid item xs={12} sm={6}>
+                    <Card sx={{ padding: '1rem', boxShadow: 4, borderRadius: '16px' }}>
+                        <CardContent>
+                            <Typography variant="h6" align="center" gutterBottom>
+                                Orders Breakdown
+                            </Typography>
+                            <ResponsiveContainer width="100%" height={300}>
+                                <PieChart>
+                                    <Pie
+                                        data={orderData}
+                                        cx="50%"
+                                        cy="50%"
+                                        labelLine={false}
+                                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                        outerRadius={120}
+                                        fill="#8884d8"
+                                        dataKey="value"
+                                    >
+                                        {orderData.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                    <Card sx={{ padding: '1rem', boxShadow: 4, borderRadius: '16px' }}>
+                        <CardContent>
+                            <Typography variant="h6" align="center" gutterBottom>
+                                Queries Breakdown
+                            </Typography>
+                            <ResponsiveContainer width="100%" height={300}>
+                                <PieChart>
+                                    <Pie
+                                        data={queryData}
+                                        cx="50%"
+                                        cy="50%"
+                                        labelLine={false}
+                                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                        outerRadius={120}
+                                        fill="#82ca9d"
+                                        dataKey="value"
+                                    >
+                                        {queryData.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                    <Card sx={{ padding: '1rem', boxShadow: 4, borderRadius: '16px' }}>
+                        <CardContent>
+                            <Typography variant="h6" align="center" gutterBottom>
+                                Reservations Breakdown
+                            </Typography>
+                            <ResponsiveContainer width="100%" height={300}>
+                                <PieChart>
+                                    <Pie
+                                        data={reservationData}
+                                        cx="50%"
+                                        cy="50%"
+                                        labelLine={false}
+                                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                        outerRadius={120}
+                                        fill="#ffc658"
+                                        dataKey="value"
+                                    >
+                                        {reservationData.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
-
-            {/* Pie Chart for Orders */}
-            <Card sx={{ padding: '2rem', boxShadow: 4, borderRadius: '16px', marginBottom: '2rem' }}>
-                <CardContent>
-                    <Typography variant="h5" align="center" gutterBottom>
-                        Orders Breakdown
-                    </Typography>
-                    <ResponsiveContainer width="100%" height={400}>
-                        <PieChart>
-                            <Pie
-                                data={orderData}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                                outerRadius={150}
-                                fill="#8884d8"
-                                dataKey="value"
-                            >
-                                {orderData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                            <Tooltip />
-                            <Legend verticalAlign="bottom" height={36} />
-                        </PieChart>
-                    </ResponsiveContainer>
-                </CardContent>
-            </Card>
-
-            {/* Pie Chart for Reservations */}
-            <Card sx={{ padding: '2rem', boxShadow: 4, borderRadius: '16px', marginBottom: '2rem' }}>
-                <CardContent>
-                    <Typography variant="h5" align="center" gutterBottom>
-                        Reservations Breakdown
-                    </Typography>
-                    <ResponsiveContainer width="100%" height={400}>
-                        <PieChart>
-                            <Pie
-                                data={reservationData}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                                outerRadius={150}
-                                fill="#8884d8"
-                                dataKey="value"
-                            >
-                                {reservationData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                            <Tooltip />
-                            <Legend verticalAlign="bottom" height={36} />
-                        </PieChart>
-                    </ResponsiveContainer>
-                </CardContent>
-            </Card>
         </Box>
     );
 };

@@ -38,7 +38,6 @@ const ReservationsManagement = () => {
         minute: '2-digit',
         hour12: true,
       };
-      // const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
       return `${formattedDate} `;
     } catch (error) {
       return 'Invalid date'; 
@@ -47,7 +46,7 @@ const ReservationsManagement = () => {
 
   const updateReservationStatus = async (id, status) => {
     try {
-      const response = await fetch(`http://localhost:3000/reservations/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/reservations/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +58,6 @@ const ReservationsManagement = () => {
         throw new Error(`Failed to update reservation status: ${response.statusText}`);
       }
 
-      // Re-fetch reservations after updating the status
       fetchReservations();
     } catch (error) {
       setError(error.message);
