@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 
-const SignUp = ({ onClose, setUser }) => {
+const SignUp = ({ setUser }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess(false);
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
@@ -27,8 +30,8 @@ const SignUp = ({ onClose, setUser }) => {
       localStorage.setItem('user', JSON.stringify(data.user));
 
       setUser(data.user);
-    
-      onClose();
+
+      setSuccess(true); // Show success message
     } catch (err) {
       setError(err.message);
     }
@@ -38,6 +41,7 @@ const SignUp = ({ onClose, setUser }) => {
     <div>
       <h2 className="text-2xl font-semibold mb-4 text-center">Register</h2>
       {error && <p className="text-red-600 text-center">{error}</p>}
+      {success && <p className="text-green-600 text-center">Registration successful! You can now log in.</p>}
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name" className="block text-lg">Name</label>

@@ -1,7 +1,7 @@
 import React from "react";
-import { FaUtensils, FaConciergeBell, FaCocktail } from "react-icons/fa";
-import { GiChefToque } from "react-icons/gi";
-import { MdDeliveryDining } from "react-icons/md";
+import { FaUtensils, FaConciergeBell, FaCocktail, FaWineGlassAlt, FaBirthdayCake } from "react-icons/fa";
+import { GiChefToque, GiBowlOfRice, GiHotMeal } from "react-icons/gi";
+import { MdDeliveryDining, MdOutlineEventSeat } from "react-icons/md";
 import { motion } from "framer-motion";
 
 const services = [
@@ -29,6 +29,26 @@ const services = [
     icon: <MdDeliveryDining size={40} />,
     title: "Home Delivery",
     description: "Delicious meals delivered right to your doorstep, hot and fresh."
+  },
+  {
+    icon: <GiBowlOfRice size={40} />,
+    title: "Buffet Service",
+    description: "Indulge in an array of dishes with our all-you-can-eat buffet."
+  },
+  {
+    icon: <MdOutlineEventSeat size={40} />,
+    title: "Event Hosting",
+    description: "Host your next event with us and enjoy top-notch service and ambiance."
+  },
+  {
+    icon: <FaBirthdayCake size={40} />,
+    title: "Custom Cakes",
+    description: "Order personalized cakes for your special celebrations."
+  },
+  {
+    icon: <GiHotMeal size={40} />,
+    title: "Meal Plans",
+    description: "Healthy and delicious meal plans tailored to your dietary needs."
   }
 ];
 
@@ -42,7 +62,7 @@ const Services = () => {
         {services.map((service, index) => (
           <motion.div
             key={index}
-            className="w-full md:w-1/3 lg:w-1/4 p-6 bg-white shadow-lg rounded-lg transition-transform transform hover:scale-105"
+            className="w-full md:w-1/3 lg:w-1/4 p-6 bg-white shadow-lg rounded-lg border-2 border-orange-500 transition-transform transform hover:scale-105 hover:border-orange-200"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
